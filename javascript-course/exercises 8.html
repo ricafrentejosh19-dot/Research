@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <script>
+      const product1 = {
+        name: 'tshirt',
+        price: 2000 
+      };
+
+      const product2 ={
+        name: 'tshirt',
+        price: 2000
+      };
+
+      
+      
+
+      function comparePrice(product1, product2){
+        if (product1 < product2){
+          return product1;
+
+        } else{
+          return product2;
+        }
+
+       
+      }
+
+      function isSameproducts(product1, product2){
+        if (product1.name === product2.name && product1.price === product2.price){
+          return true;
+        
+        } else{
+          return false
+        }
+      }
+
+       console.log(comparePrice(product1, product2));
+       console.log(isSameproducts(product1, product2));
+
+       console.log('Good Morning'.toLowerCase())
+    </script>
+  </body>
+</html>

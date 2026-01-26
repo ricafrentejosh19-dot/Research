@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+  <title>10 Exercises</title>
+
+
+
+  <style>
+
+  .cart{
+    padding: 25px;
+    background-color: rgb(255, 216, 20);
+    border: none;
+    padding-left: 60px;
+    padding-right: 60px;
+    border-radius: 50px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .cart2{
+    padding: 25px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding-left: 60px;
+    padding-right: 60px;
+    border-radius: 50px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  </style>
+</head>
+<body>
+  
+<button class="cart" onclick="
+  work();
+  "> Add to Cart</button>
+
+<script>
+
+function work (){
+const alaCart = document.querySelector('.cart');
+
+
+if(alaCart.innerHTML === 'Add to Cart'){
+
+  alaCart.innerHTML = 'Added to Cart';
+alaCart.classList.add('cart2')
+
+} 
+
+else {
+  alaCart.innerHTML = 'Add to Cart';
+  alaCart.classList.remove('cart2')
+}
+
+
+}
+
+</script>
+
+
+
+</body>
+</html>

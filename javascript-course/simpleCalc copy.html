@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>Calculator</p>
+    <p>
+    <button class="one" onclick="
+    updateCalculation('1')">
+      1
+    </button>
+
+    <button class="two" onclick="
+    updateCalculation('2')">
+      2
+    </button>
+    
+    <button class="three" onclick="
+    updateCalculation('3')">
+      3
+    </button>
+
+    <button class="plus" onclick="
+    updateCalculation(' + ')">
+      +
+    </button>
+    </p>
+    <p>
+    <button class="four" onclick="
+     updateCalculation('4')">
+      4
+    </button>
+
+    <button class="five" onclick="
+    updateCalculation('5')">
+      5
+    </button>
+
+    <button class="six" onclick="
+     updateCalculation('6')">
+      6
+    </button>
+    
+    <button class="minus" onclick="
+     updateCalculation(' - ')">
+      -
+    </button>
+    </p>
+
+    <p>
+    <button class="seven" onclick="
+     updateCalculation('7')">
+      7
+    </button>
+    
+    <button class="8" onclick="
+    updateCalculation('8')">
+      8
+    </button>
+    <button class="9" onclick="
+     updateCalculation('9')">
+      9
+    </button>
+
+    <button class="times" onclick="
+     updateCalculation('*')">
+      *
+    </button>
+    </p>
+    <p>
+    <button class="0" onclick="
+     updateCalculation('0')">
+      0
+    </button>
+
+    <button class="dot" onclick="
+     updateCalculation('.')"> 
+      .
+    </button>
+
+    <button class="=" onclick="
+    calculation = eval(calculation);
+    console.log(calculation)">
+      =
+    </button>
+
+    <button class="divide" onclick="
+    updateCalculation(' / ')">
+      /
+    </button>
+    </p>
+    <p>
+    <button class="clear" onclick="
+    updateCalculation('')">
+      clear
+    </button>
+    </p>
+    <script>
+     let calculation = localStorage.getItem('calculation') || ''; //gumagana na aso ay nagsave yung null AHAHAHAHA
+
+      function updateCalculation(value)
+      {
+
+          calculation += value;
+          console.log(calculation);
+          localStorage.setItem('calculation', calculation);
+          
+      }
+    </script>
+  </body>
+</html>

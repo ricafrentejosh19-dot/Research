@@ -1,0 +1,67 @@
+ body{
+          background-color: rgb(25, 25, 25);
+          color: white;
+          font-family: arial;
+        }
+
+        .title{
+          font-family: arial;
+          font-size: 30px;
+          color: white;
+          font-weight: bold;
+
+        }
+
+        .moves{
+          height: 50px;
+          font-family: arial;
+          color: white;
+
+        }
+
+        .rock{
+          background-color: rgb(25, 25, 25);
+          border-radius: 60px;
+          padding: 30px;
+          margin-right: 10px;
+          border: 3px solid white;
+          cursor: pointer;
+          
+        }
+
+        .paper{
+          background-color: rgb(25, 25, 25);
+          border-radius: 60px;
+          padding: 30px;
+          margin-right: 10px;
+          border: 3px solid white;
+          cursor: pointer;
+          
+        }
+
+        .scissors{
+          background-color: transparent;
+          border-radius: 60px;
+          padding: 30px;
+          margin-right: 10px;
+          border: 3px solid white;
+          cursor: pointer;
+          
+        }
+
+        .winLose{
+          height: 10px;
+          font-weight: bold;
+          margin-top: 10px;
+        }
+
+        .Total-score{
+          margin-top: 100px;;
+        }
+
+        .resulta{
+          font-weight: bold;
+          font-family: arial;
+          font-size: 30px;
+          margin-top: 40px;
+        }

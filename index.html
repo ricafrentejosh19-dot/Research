@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarence Josh S. Ricafrente — Software Developer</title>
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: #eee;
+      background-color: #121212;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: #ff9800;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #ffc107;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: #1e1e1e;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 20px;
+      font-weight: bold;
+      color: #ff9800;
+    }
+    nav a:hover {
+      color: #ffc107;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 40px 20px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      text-align: left;
+    }
+
+    /* Profile Picture */
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ff9800;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      margin-right: 30px;
+      flex-shrink: 0;
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #ff9800;
+    }
+    .header-text p {
+      margin: 5px 0;
+      font-size: 1.1em;
+      color: #ccc;
+    }
+
+    /* Sections */
+    section {
+      background-color: #1e1e1e;
+      padding: 30px 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.7);
+    }
+    .section-title {
+      border-bottom: 2px solid #ff9800;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      font-size: 1.6em;
+      color: #ff9800;
+    }
+
+    /* Project */
+    .project h3 {
+      margin: 0;
+      color: #fff;
+    }
+    .project img {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #444;
+    }
+
+    /* Skills */
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+    li {
+      color: #ccc;
+    }
+
+    /* Resume Button */
+    .resume-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #ff9800;
+      color: #1e1e1e;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .resume-btn:hover {
+      background-color: #ffc107;
+      transform: scale(1.05);
+    }
+
+    /* Contact */
+    .contact a {
+      display: inline-block;
+      margin: 5px 0;
+      color: #ff9800;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .profile-pic {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        margin: 8px 0;
+      }
+      .header-text h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+ 
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <img src="https://raw.githubusercontent.com/ricafrentejosh19-dot/ricafrentejosh19-dot.github.io/main/profile.jpg" alt="Clarence Josh S. Ricafrente" class="profile-pic">
+
+      <div class="header-text">
+        <h1>Clarence Josh S. Ricafrente</h1>
+        <p><strong>Junior Software Developer</strong></p>
+        <p>
+          📍 Lucena City, Philippines •  
+          📧 <a href="mailto:ricafrentejosh19@gmail.com">ricafrentejosh19@gmail.com</a> •  
+          GitHub: <a href="https://github.com/ricafrentejosh19-dot" target="_blank">github.com/ricafrentejosh19-dot</a>
+        </p>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <p>
+        I am an aspiring software developer with practical experience building desktop applications using C# and .NET. I have developed a complete Point of Sale (POS) and inventory management system using WinForms, and I enjoy writing clean, maintainable code and solving real-world problems.
+      </p>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2 class="section-title">Featured Project</h2>
+      <div class="project">
+        <h3>GlamSync — POS & Inventory Management System</h3>
+        <p>
+          A WinForms desktop application built using C# and .NET that serves as a Point of Sale system with inventory tracking, product management, and sales transaction features. Developed for Miss Ivee Browsthetic Salon to help manage sales and inventory efficiently.
+        </p>
+        <p><strong>Tech Stack:</strong> C#, .NET (WinForms), SQL Server / MySQL</p>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <h2 class="section-title">Technical Skills</h2>
+      <ul>
+        <li>C#, .NET (WinForms)</li>
+        <li>SQL (SQL Server, MySQL)</li>
+        <li>Visual Studio, Git</li>
+        <li>HTML, CSS, JavaScript (basic)</li>
+        <li>Database design & development</li>
+      </ul>
+    </section>
+
+    <!-- Education -->
+    <section id="education">
+      <h2 class="section-title">Education</h2>
+      <p><strong>Bachelor of Science in Information Technology</strong><br>
+         STI College Lucena (2022 – 2026)</p>
+
+      <p><strong>Mobile App & Web Development Strand</strong><br>
+         STI College Lucena (2020 – 2022)</p>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications">
+      <h2 class="section-title">Certifications & Achievements</h2>
+      <ul>
+        <li>Microsoft Certification for C# Programming</li>
+        <li>Certificate of Recognition for utilization of SAP S/4HANA modules</li>
+      </ul>
+    </section>
+
+    <!-- Resume -->
+    <section id="resume">
+      <h2 class="section-title">Resume</h2>
+      <p>
+        <a href="resume.pdf" download class="resume-btn">Download My Resume (PDF)</a>
+      </p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact">
+        <p>Email: <a href="mailto:ricafrentejosh19@gmail.com">ricafrentejosh19@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/ricafrentejosh19-dot" target="_blank">github.com/ricafrentejosh19-dot</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    &copy; 2026 Clarence Josh S. Ricafrente. All rights reserved.
+  </footer>
+
+</body>
+</html>

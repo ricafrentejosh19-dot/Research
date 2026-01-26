@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Data to PDF</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+    .form-container {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .form-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    input, select {
+      padding: 8px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      background: #2563eb;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #1e40af;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .table-wrapper {
+      max-width: 1200px;
+      margin: auto;
+      overflow-x: auto;
+    }
+
+    /* Mobile card layout */
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead {
+        display: none;
+      }
+      tbody tr {
+        background: #fff;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        padding: 10px;
+      }
+      td {
+        border: none;
+        text-align: left;
+        padding: 6px 0;
+        white-space: normal;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        font-size: 12px;
+        color: #555;
+      }
+    }
+    thead {
+      background: #e5e7eb;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    tbody tr {
+      cursor: pointer;
+    }
+    tbody tr.selected {
+      background-color: #dbeafe;
+      outline: 2px solid #2563eb;
+    }
+    tbody tr:hover {
+      background-color: #f3f4f6;
+    }
+    .actions {
+      max-width: 1200px;
+      margin: 15px auto 0;
+      text-align: right;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .actions {
+        text-align: center;
+      }
+      .actions button {
+        width: 100%;
+        margin-top: 10px;
+        margin-right: 0 !important;
+      }
+    }
+
+    /* Ultra-wide screens */
+    @media (min-width: 1600px) {
+      body {
+        padding: 40px;
+      }
+      th, td {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Sales Entry & PDF Export</h1>
+
+<div class="form-container">
+  <div class="form-group">
+    <input type="text" id="outlet" placeholder="Outlet Name" />
+    <input type="date" id="date" />
+    <input type="text" id="invoice" placeholder="Sales Invoice" />
+    <input type="number" id="quantity" placeholder="Quantity" />
+    <input type="number" step="0.01" id="rate" placeholder="Cost per Rate" />
+  </div>
+
+  <div style="margin-top:10px">
+    <label><strong>Pump Price (per liter):</strong></label>
+    <select id="pumpPrice">
+      <option value="55">55.00</option>
+      <option value="60">60.00</option>
+      <option value="65">65.00</option>
+    </select>
+  </div>
+
+  <br />
+  <button onclick="addRow()">Add to Table</button>
+</div>
+
+<div class="table-wrapper">
+<table id="salesTable">
+  <thead>
+    <tr>
+      <th>Outlet Name</th>
+      <th>Date</th>
+      <th>Sales Invoice</th>
+      <th>Quantity</th>
+      <th>Cost per Rate</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</div>
+
+<div class="actions">
+  <h3 id="totalAmount">Total Amount: 0.00</h3>
+  <button onclick="deleteSelectedRow()" style="background: #dc2626; margin-right: 10px;">Delete Selected Row</button>
+  <button onclick="exportPDF()">Export to PDF</button>
+</div>
+
+<script>
+  function addRow() {
+    const outlet = document.getElementById('outlet').value;
+    const date = document.getElementById('date').value;
+    const invoice = document.getElementById('invoice').value;
+    const quantity = parseFloat(document.getElementById('quantity').value);
+    const rate = parseFloat(document.getElementById('rate').value);
+
+    if (!outlet || !date || !invoice || isNaN(quantity) || isNaN(rate)) {
+      alert('Please complete all fields');
+      return;
+    }
+
+    const amount = quantity * rate;
+    const tableBody = document.querySelector('#salesTable tbody');
+    const row = tableBody.insertRow();
+
+    row.innerHTML = `
+      <td data-label="Outlet Name">${outlet}</td>
+      <td data-label="Date">${date}</td>
+      <td data-label="Sales Invoice">${invoice}</td>
+      <td data-label="Quantity">${quantity}</td>
+      <td data-label="Cost per Rate">${rate.toFixed(2)}</td>
+      <td data-label="Amount" class="amount">${amount.toFixed(2)}</td>
+    `;
+
+    // Add click event to select row
+    row.addEventListener('click', function() {
+      // Remove selection from all rows
+      document.querySelectorAll('#salesTable tbody tr').forEach(r => {
+        r.classList.remove('selected');
+      });
+      // Select this row
+      this.classList.add('selected');
+    });
+
+    updateTotal();
+
+    document.querySelectorAll('.form-group input').forEach(input => input.value = '');
+  }
+
+  function updateTotal() {
+    let sum = 0;
+    document.querySelectorAll('.amount').forEach(cell => {
+      sum += parseFloat(cell.innerText);
+    });
+    document.getElementById('totalAmount').innerText = `Total Amount: ${sum.toFixed(2)}`;
+  }
+
+  function deleteSelectedRow() {
+    const selectedRow = document.querySelector('#salesTable tbody tr.selected');
+    if (selectedRow) {
+      selectedRow.remove();
+      updateTotal();
+    } else {
+      alert('Please select a row to delete');
+    }
+  }
+
+  function exportPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('l', 'mm', 'a4');
+
+    const pump = document.getElementById('pumpPrice').value;
+
+    doc.setFontSize(14);
+    doc.text('DCA MULTITUDE TRADING CORPORATION', 14, 15);
+
+    let totalAmount = 0;
+    const tableData = [];
+
+    document.querySelectorAll('#salesTable tbody tr').forEach(row => {
+      const rowData = [];
+      row.querySelectorAll('td').forEach((cell, index) => {
+        rowData.push(cell.innerText);
+        if (index === 5) {
+          totalAmount += parseFloat(cell.innerText);
+        }
+      });
+      tableData.push(rowData);
+    });
+
+    doc.autoTable({
+      head: [[
+        'Outlet Name',
+        'Date',
+        'Sales Invoice',
+        'Quantity',
+        'Cost per Rate',
+        'Amount'
+      ]],
+      body: tableData,
+      foot: [[
+        { content: `at ${pump}.00 / L pump price`, colSpan: 5, styles: { halign: 'left' } },
+        { content: totalAmount.toFixed(2) }
+      ]],
+      startY: 25,
+      styles: { fontSize: 9, halign: 'center' },
+      headStyles: {
+        halign: 'center'
+      },
+      columnStyles: {
+        5: { halign: 'center' }
+      },
+      footStyles: {
+        fontStyle: 'bold',
+        halign: 'center'
+      }
+    });
+
+    doc.save('sales-report.pdf');
+  }
+
+  // Add keyboard event listener for Delete key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Delete') {
+      const selectedRow = document.querySelector('#salesTable tbody tr.selected');
+      if (selectedRow) {
+        selectedRow.remove();
+        updateTotal();
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title class="name">Advanced Functions</title>
+</head>
+<body>
+
+  <button class="startFinish" onclick="
+   sample2();
+    
+    ">Start</button>
+
+    <button onclick="sample3();">Add to Cart</button>
+    <p class="Added"></p>
+
+    <button class="add" onclick="messNum++">Add</button>
+    <button class="remove" onclick="messNum--">Remove</button>
+  <script>
+
+/* ====12 a====
+    let add = function(){
+      console.log(2 + 3);
+    }
+    add();
+    add();
+*/
+
+/*
+
+const get = document.querySelector('.startFinish');
+const get2 = document.querySelector('.Added');
+
+
+function sample3(){
+  let idTImeout;
+  get2.innerHTML = 'Added!';
+
+  clearTimeout(idTImeout);
+
+  idTImeout = setTimeout(function(){
+    get2.innerHTML = '';
+  }, 2000);
+  
+}
+
+
+
+function sample2(){
+  get.innerHTML = 'Loading..';
+}
+
+setInterval(function sample(){
+  get.innerHTML = 'Finished!'
+}, 3000 ) */
+
+/*
+const message = document.querySelector('.name');
+
+
+setInterval(function(){ if(message.innerHTML === 'Advanced Functions'){
+  message.innerHTML = '(2) Messages';
+}
+else
+{message.innerHTML = 'Advanced Functions'}}, 2000);
+
+let idTImeout2;
+
+clearTimeout(idTImeout2);
+*/
+
+const message2 = document.querySelector('.name');
+let messNum = 2;
+let idTImeout3;
+
+
+setInterval(function(){
+  if (message2.innerHTML === 'Advanced Functions'){
+   
+    message2.innerHTML = `(${messNum})Messages`;
+    
+   
+
+  } else(message.innerHTML = 'Advanced Functions');
+    }, 2000)
+
+  
+ 
+   
+
+
+
+
+
+
+  
+  </script>
+</body>
+</html>

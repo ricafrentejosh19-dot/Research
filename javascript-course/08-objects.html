@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> objects</title>
+  </head>
+  <body>
+    <script>
+
+      const product = {
+        name: 'socks', 
+        price: 1090
+      };
+
+      console.log(product);
+      console.log(product.price);
+      console.log(product.name);
+
+      product.price = 500;
+      console.log(product)
+
+      console.log(JSON.stringify(product));
+      const stringJSON = JSON.stringify(product);
+     ;
+      console.log( JSON.parse(stringJSON));
+    </script>
+  </body>
+</html>
