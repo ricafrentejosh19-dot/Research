@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Card 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hearts-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .envelope {
+            width: 350px;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-base {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow:
+                0 20px 60px rgba(255, 107, 157, 0.25),
+                0 8px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .envelope-back {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #fafafa 0%, #ffffff 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .flap {
+            width: 350px;
+            height: 175px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: top center;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 3;
+            clip-path: polygon(0 0, 100% 0, 50% 70%);
+            box-shadow: 
+                0 4px 15px rgba(233, 30, 99, 0.3),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .flap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .flap::after {
+            content: '💝';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            opacity: 0.4;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        .letter {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(145deg, #ffffff 0%, #fff5f7 50%, #ffe4e9 100%);
+            position: absolute;
+            top: 125px;
+            left: 25px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            z-index: 1;
+            padding: 25px;
+            box-shadow:
+                0 8px 25px rgba(255, 107, 157, 0.2),
+                0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 179, 186, 0.3);
+            opacity: 0;
+        }
+
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px dashed rgba(255, 107, 157, 0.2);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-150px);
+            z-index: 4;
+            opacity: 1;
+        }
+
+        .tap-text {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.6; transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .question-container {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.15),
+                0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 420px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .question-container.active {
+            display: block;
+            animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .question-container h2 {
+            font-size: 34px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .warning-text {
+            display: none;
+            color: #ff1744;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: shake 0.5s;
+            text-shadow: 0 2px 4px rgba(255, 23, 68, 0.2);
+        }
+
+        .warning-text.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px) rotate(-2deg); }
+            75% { transform: translateX(10px) rotate(2deg); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 16px 45px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-yes:active {
+            transform: translateY(0) scale(1);
+        }
+
+        .btn-no {
+            background: linear-gradient(145deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #666;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-no:hover {
+            background: linear-gradient(145deg, #e8e8e8 0%, #d5d5d5 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-no.hidden {
+            animation: fadeOut 0.3s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.8);
+                display: none;
+            }
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: heartBeat 1s;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.08); }
+        }
+
+        .success-message h2 {
+            font-size: 32px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .date-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .date-btn {
+            padding: 18px 30px;
+            font-size: 18px;
+            border: 2px solid #ff6b9d;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            background: white;
+            color: #ff6b9d;
+        }
+
+        .date-btn:hover {
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .movie-options {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .movie-options.active {
+            display: flex;
+        }
+
+        .food-options {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .food-options.active {
+            display: flex;
+        }
+
+        .movie-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border: 2px solid #ff6b9d;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: #ff6b9d;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .movie-btn:hover {
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .movie-btn img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .food-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border: 2px solid #ff6b9d;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: #ff6b9d;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .food-btn:hover {
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .food-btn img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .custom-input-container {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .custom-input-container.active {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #ff6b9d;
+            border-radius: 25px;
+            outline: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input:focus {
+            border-color: #e91e63;
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+
+        .submit-btn {
+            margin-top: 15px;
+            padding: 15px 40px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .final-message {
+            display: none;
+            text-align: center;
+        }
+
+        .final-message.active {
+            display: block;
+            animation: heartBeat 1s;
+        }
+
+        .final-message .heart-icon {
+            font-size: 90px;
+            animation: float 2s infinite ease-in-out;
+            filter: drop-shadow(0 4px 8px rgba(255, 107, 157, 0.3));
+        }
+
+        .final-message h2 {
+            font-size: 38px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .final-message p {
+            color: #666;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .movie-details {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            animation: slideIn 0.4s ease;
+        }
+
+        .movie-details.active {
+            display: flex;
+        }
+
+        .movie-poster img {
+            width: 150px;
+            height: 225px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .movie-info {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .movie-info h3 {
+            font-size: 24px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .movie-info p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .confirm-btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 2px solid #ff6b9d;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: #ff6b9d;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-background" id="heartsBackground"></div>
+    
+    <div class="container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-base">
+                <div class="letter">
+                    <!-- Blank letter paper -->
+                </div>
+                <div class="envelope-back"></div>
+                <div class="flap"></div>
+            </div>
+            <div class="tap-text">Click to open!</div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <h2>Will you be my Valentine? 💝</h2>
+            <div class="warning-text" id="warningText">Bawal humindi! 😤</div>
+            <div class="buttons" id="buttonContainer">
+                <button class="btn btn-yes" id="btnYes">Yes! 💕</button>
+                <button class="btn btn-no" id="btnNo">No</button>
+            </div>
+            <div class="success-message" id="successMessage">
+                <h2>Anong klaseng date gusto mo? 💝</h2>
+                <div class="date-options">
+                    <button class="date-btn" data-choice="Movies">Movies 🎬</button>
+                    <button class="date-btn" data-choice="Kakain">Kakain 🍽️</button>
+                    <button class="date-btn" id="customBtn">May suggest akong iba 💭</button>
+                </div>
+                <div class="movie-options" id="movieOptions">
+                    <button class="back-btn" id="backToDateOptions">← Back to Date Options</button>
+                    <button class="movie-btn" data-movie="Wuthering Heights">
+                        <img src="https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001434?width=200" alt="Wuthering Heights">
+                        Wuthering Heights
+                    </button>
+                    <button class="movie-btn" data-movie="The Loved One">
+                        <img src="https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001425?width=200" alt="The Loved One">
+                        The Loved One
+                    </button>
+                    <button class="movie-btn" data-movie="Diabolic">
+                        <img src="https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001426?width=200" alt="Diabolic">
+                        Diabolic
+                    </button>
+                </div>
+                <div class="movie-details" id="movieDetails">
+                    <button class="back-btn" id="backToMovies">← Back to Movies</button>
+                    <div class="movie-poster">
+                        <img id="selectedMoviePoster" src="" alt="Movie Poster">
+                    </div>
+                    <div class="movie-info">
+                        <h3 id="selectedMovieTitle"></h3>
+                        <p id="selectedMovieDescription"></p>
+                        <button class="confirm-btn" id="confirmMovie">Confirm Movie</button>
+                    </div>
+                </div>
+                <div class="food-options" id="foodOptions">
+                    <button class="back-btn" id="backToDateOptionsFromFood">← Back to Date Options</button>
+                    <button class="food-btn" data-food="Jollibee">
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.d0nunpqtC4sT-hzPCI1OiwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Jollibee">
+                        Jollibee
+                    </button>
+                    <button class="food-btn" data-food="Mcdo">
+                        <img src="https://tse1.mm.bing.net/th/id/OIP.GEu-BoCoUyyS4RcTlOsb5wHaE6?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Mcdo">
+                        Mcdo
+                    </button>
+                    <button class="food-btn" data-food="Mang Inasal">
+                        <img src="https://th.bing.com/th/id/R.7ee6a2d6a1b55af15a9ae1cdc9833019?rik=I%2bKHAZWTFK3Ipw&riu=http%3a%2f%2fphilnews.ph%2fwp-content%2fuploads%2f2023%2f11%2fMang-Inasal.jpg&ehk=Fchl14oOEZOA6WOyod6X7LSryObsE9eMS4buuzny1HI%3d&risl=&pid=ImgRaw&r=0" alt="Mang Inasal">
+                        Mang Inasal
+                    </button>
+                    <button class="food-btn" data-food="DadBod">
+                        <img src="https://media-cdn.tripadvisor.com/media/photo-p/13/6f/6e/15/photo0jpg.jpg" alt="DadBod">
+                        DadBod
+                    </button>
+                    <button class="food-btn" data-food="Buddys">
+                        <img src="https://media-cdn.tripadvisor.com/media/photo-s/07/9c/48/ac/rule-of-thumb-order-at.jpg" alt="Buddys">
+                        Buddys
+                    </button>
+                    <button class="food-btn" data-food="Le Maison">
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipOVL4qbakNjUwACVWhZsVI2ODe1mYf1ixiUsEb_=w426-h240-k-no" alt="Le Maison">
+                        Le Maison
+                    </button>
+                    <button class="food-btn" data-food="Seasoned Unlimited Samgyupsal">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.nq76HyQejXzC_15flgty0AHaL6?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Seasoned Unlimited Samgyupsal">
+                        Seasoned Unlimited Samgyupsal
+                    </button>
+                    <button class="date-btn" id="foodSuggestionsBtn">Suggest 💭</button>
+                </div>
+                <div class="custom-input-container" id="foodCustomInputContainer">
+                    <input type="text" class="custom-input" id="foodCustomInput" placeholder="Ano gusto mong kainin? 💕">
+                    <button class="submit-btn" id="submitFoodCustom">Submit</button>
+                </div>
+                <div class="custom-input-container" id="customInputContainer">
+                    <input type="text" class="custom-input" id="customInput" placeholder="Ano gusto mo? 💕">
+                    <button class="submit-btn" id="submitCustom">Submit</button>
+                </div>
+            </div>
+            <div class="final-message" id="finalMessage">
+                <div class="heart-icon">💖</div>
+                <p id="finalText">Happy Valentine's Day! 💝</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        const heartsBackground = document.getElementById('heartsBackground');
+        const heartSymbols = ['❤️', '💕', '💖', '💗', '💝'];
+        
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            heartsBackground.appendChild(heart);
+        }
+
+        // Envelope interaction
+        const envelope = document.getElementById('envelope');
+        const questionContainer = document.getElementById('questionContainer');
+        
+        envelope.addEventListener('click', function() {
+            this.classList.add('open');
+            setTimeout(() => {
+                this.style.display = 'none';
+                questionContainer.classList.add('active');
+            }, 600);
+        });
+
+        // Button interactions
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const warningText = document.getElementById('warningText');
+        const successMessage = document.getElementById('successMessage');
+        const buttonContainer = document.getElementById('buttonContainer');
+
+        btnNo.addEventListener('click', function() {
+            warningText.classList.add('show');
+            setTimeout(() => {
+                warningText.classList.remove('show');
+            }, 2000);
+            
+            // After showing warning, hide the No button
+            setTimeout(() => {
+                this.classList.add('hidden');
+                setTimeout(() => {
+                    this.style.display = 'none';
+                }, 300);
+            }, 2000);
+        });
+
+        btnYes.addEventListener('click', function() {
+            document.querySelector('.question-container h2').style.display = 'none';
+            buttonContainer.style.display = 'none';
+            warningText.style.display = 'none';
+            successMessage.classList.add('active');
+            
+            // Create celebration hearts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.style.position = 'fixed';
+                    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '-50px';
+                    heart.style.zIndex = '1000';
+                    heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    document.body.appendChild(heart);
+                    
+                    const fallDuration = 3 + Math.random() * 2;
+                    const drift = (Math.random() - 0.5) * 100;
+                    heart.animate([
+                        { 
+                            transform: 'translateY(0) translateX(0) rotate(0deg)', 
+                            opacity: 1 
+                        },
+                        { 
+                            transform: `translateY(${window.innerHeight + 100}px) translateX(${drift}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, 
+                            opacity: 0 
+                        }
+                    ], {
+                        duration: fallDuration * 1000,
+                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    });
+                    
+                    setTimeout(() => heart.remove(), fallDuration * 1000);
+                }, i * 100);
+            }
+        });
+
+        // Date options handling
+        const dateButtons = document.querySelectorAll('.date-btn[data-choice]');
+        const movieOptions = document.getElementById('movieOptions');
+        const movieButtons = document.querySelectorAll('.movie-btn[data-movie]');
+        const movieDetails = document.getElementById('movieDetails');
+        const selectedMoviePoster = document.getElementById('selectedMoviePoster');
+        const selectedMovieTitle = document.getElementById('selectedMovieTitle');
+        const selectedMovieDescription = document.getElementById('selectedMovieDescription');
+        const confirmMovie = document.getElementById('confirmMovie');
+        const foodOptions = document.getElementById('foodOptions');
+        const foodButtons = document.querySelectorAll('.date-btn[data-food]');
+        const foodSuggestionsBtn = document.getElementById('foodSuggestionsBtn');
+        const foodCustomInputContainer = document.getElementById('foodCustomInputContainer');
+        const foodCustomInput = document.getElementById('foodCustomInput');
+        const submitFoodCustom = document.getElementById('submitFoodCustom');
+        const customBtn = document.getElementById('customBtn');
+        const customInputContainer = document.getElementById('customInputContainer');
+        const customInput = document.getElementById('customInput');
+        const submitCustom = document.getElementById('submitCustom');
+        const finalMessage = document.getElementById('finalMessage');
+        const finalText = document.getElementById('finalText');
+
+        // Movie data with descriptions
+        const movieData = {
+            "Wuthering Heights": {
+                poster: "https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001434?width=200",
+                description: "A passionate tale of love and revenge set on the wild Yorkshire moors. Heathcliff, an orphan brought to live at Wuthering Heights, falls deeply in love with Catherine Earnshaw. Their intense relationship is torn apart by social class and personal ambitions, leading to a lifetime of torment and longing."
+            },
+            "The Loved One": {
+                poster: "https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001425?width=200",
+                description: "A satirical comedy about the funeral industry in Los Angeles. When a young British poet moves to America and falls in love with a beautiful mortician, he becomes entangled in the bizarre world of Hollywood's celebrity death industry, filled with eccentric characters and dark humor."
+            },
+            "Diabolic": {
+                poster: "https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001426?width=200",
+                description: "A psychological thriller about a young woman who discovers her seemingly perfect life is built on lies. As she uncovers dark secrets about her past and her husband's mysterious death, she must confront terrifying truths that threaten her sanity and survival."
+            }
+        };
+
+        // Movie button event handlers
+        movieButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const movie = this.getAttribute('data-movie');
+                const movieInfo = movieData[movie];
+
+                // Hide movie options and show movie details
+                movieOptions.classList.remove('active');
+                movieDetails.classList.add('active');
+
+                // Populate movie details
+                selectedMoviePoster.src = movieInfo.poster;
+                selectedMovieTitle.textContent = movie;
+                selectedMovieDescription.textContent = movieInfo.description;
+            });
+        });
+
+        // Back to date options button handler
+        const backToDateOptions = document.getElementById('backToDateOptions');
+        backToDateOptions.addEventListener('click', function() {
+            movieOptions.classList.remove('active');
+            customInputContainer.classList.remove('active');
+            movieDetails.classList.remove('active');
+            document.querySelector('.date-options').style.display = 'flex';
+            // Restore original heading
+            document.querySelector('.success-message h2').textContent = 'Anong klaseng date gusto mo? 💝';
+        });
+
+        // Back to movies button handler
+        const backToMovies = document.getElementById('backToMovies');
+        backToMovies.addEventListener('click', function() {
+            movieDetails.classList.remove('active');
+            movieOptions.classList.add('active');
+        });
+
+        // Confirm movie button handler
+        confirmMovie.addEventListener('click', function() {
+            const selectedMovie = selectedMovieTitle.textContent;
+            showFinalMessage(`${selectedMovie} - see you sa movie date natin`);
+        });
+
+        // Food button event handlers
+        foodButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const foodChoice = this.getAttribute('data-food');
+                showFinalMessage(foodChoice);
+            });
+        });
+
+        // Food suggestions button handler
+        foodSuggestionsBtn.addEventListener('click', function() {
+            foodCustomInputContainer.classList.add('active');
+        });
+
+        // Submit food custom button handler
+        submitFoodCustom.addEventListener('click', function() {
+            const foodCustomChoice = foodCustomInput.value.trim();
+            if (foodCustomChoice) {
+                showFinalMessage(foodCustomChoice);
+            }
+        });
+
+        // Food custom input enter key handler
+        foodCustomInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const foodCustomChoice = foodCustomInput.value.trim();
+                if (foodCustomChoice) {
+                    showFinalMessage(foodCustomChoice);
+                }
+            }
+        });
+
+        // Back to date options from food button handler
+        const backToDateOptionsFromFood = document.getElementById('backToDateOptionsFromFood');
+        backToDateOptionsFromFood.addEventListener('click', function() {
+            foodOptions.classList.remove('active');
+            foodCustomInputContainer.classList.remove('active');
+            document.querySelector('.date-options').style.display = 'flex';
+            // Restore original heading
+            document.querySelector('.success-message h2').textContent = 'Anong klaseng date gusto mo? 💝';
+        });
+
+        dateButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const choice = this.getAttribute('data-choice');
+                if (choice === 'Movies') {
+                    document.querySelector('.date-options').style.display = 'none';
+                    customInputContainer.classList.remove('active');
+                    foodCustomInputContainer.classList.remove('active');
+                    // Change heading text for Movies
+                    document.querySelector('.success-message h2').textContent = 'Anong gusto mong panoorin? 💝';
+                    movieOptions.classList.add('active');
+                } else if (choice === 'Kakain') {
+                    document.querySelector('.date-options').style.display = 'none';
+                    customInputContainer.classList.remove('active');
+                    foodCustomInputContainer.classList.remove('active');
+                    // Change heading text for Food
+                    document.querySelector('.success-message h2').textContent = 'San mo gustong kumain? 💝';
+                    foodOptions.classList.add('active');
+                } else {
+                    showFinalMessage(choice);
+                }
+            });
+        });
+
+
+        customBtn.addEventListener('click', function() {
+            customInputContainer.classList.add('active');
+        });
+
+        submitCustom.addEventListener('click', function() {
+            const customChoice = customInput.value.trim();
+            if (customChoice) {
+                showFinalMessage(customChoice);
+            }
+        });
+
+        customInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const customChoice = customInput.value.trim();
+                if (customChoice) {
+                    showFinalMessage(customChoice);
+                }
+            }
+        });
+
+        function showFinalMessage(choice) {
+            successMessage.classList.remove('active');
+            finalText.textContent = `${choice}!💝`;
+            finalMessage.classList.add('active');
+        }
+    </script>
+</body>
+</html>
