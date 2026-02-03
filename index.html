@@ -620,7 +620,7 @@
                 <div class="date-options">
                     <button class="date-btn" data-choice="Movies">Movies 🎬</button>
                     <button class="date-btn" data-choice="Kakain">Kakain 🍽️</button>
-                    <button class="date-btn" id="customBtn">Suggest 💭</button>
+                    <button class="date-btn" id="customBtn">May suggest akong iba 💭</button>
                 </div>
                 <div class="movie-options" id="movieOptions">
                     <button class="back-btn" id="backToDateOptions">← Back to Date Options</button>
@@ -690,7 +690,7 @@
                 </div>
             </div>
             <div class="final-message" id="finalMessage">
-                <div class="heart-icon">💗</div>
+                <div class="heart-icon">💖</div>
                 <p id="finalText">Happy Valentine's Day! 💝</p>
             </div>
         </div>
@@ -953,6 +953,32 @@
             successMessage.classList.remove('active');
             finalText.textContent = `${choice}!💝`;
             finalMessage.classList.add('active');
+            
+            // Send notification via Google Form
+            sendGoogleFormNotification(choice);
+        }
+        
+        function sendGoogleFormNotification(choice) {
+            // Replace these with your actual Google Form values
+            const FORM_ID = '18XMezKysZJM7KZfqUPj8XWfvu6rePeRLq4n8Prz9q_s'; // Get this from your Google Form URL
+            const ENTRY_ID = 'entry.50451598'; // Get this from pre-filled link
+            
+            const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+            
+            const formData = new FormData();
+            formData.append(ENTRY_ID, choice);
+            formData.append('submit', 'Submit');
+            
+            // Send the form data
+            fetch(formUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Required for Google Forms
+            }).then(() => {
+                console.log('Response submitted to Google Form');
+            }).catch(err => {
+                console.log('Form submission completed');
+            });
         }
     </script>
 </body>
