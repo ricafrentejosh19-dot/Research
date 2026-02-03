@@ -959,27 +959,27 @@
         }
         
         function sendGoogleFormNotification(choice) {
-            // Replace these with your actual Google Form values
-           const FORM_ID = '1FAIpQLSeI4nGpVXnRqvCwZ7Kh1itAYHpgI00v7UQMdOh-ltwL2imaCg';
-            const ENTRY_ID = 'entry.50451598'; // Get this from pre-filled link
-            
-           const formUrl = `https://docs.google.com/forms/d/${FORM_ID}/formResponse`;
-            
-            const formData = new FormData();
-            formData.append(ENTRY_ID, choice);
-            formData.append('submit', 'Submit');
-            
-            // Send the form data
-            fetch(formUrl, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors' // Required for Google Forms
-            }).then(() => {
-                console.log('Response submitted to Google Form');
-            }).catch(err => {
-                console.log('Form submission completed');
-            });
-        }
+    // Use the EDIT URL form ID (the one from /edit#responses page)
+    const FORM_ID = '18XMezKysZJM7KZfqUPj8XWfvu6rePeRLq4n8Prz9q_s';
+    const ENTRY_ID = 'entry.50451598';
+    
+    // IMPORTANT: No /e/ in the path for this format
+    const formUrl = `https://docs.google.com/forms/d/${FORM_ID}/formResponse`;
+    
+    const formData = new FormData();
+    formData.append(ENTRY_ID, choice);
+    
+    // Send the form data
+    fetch(formUrl, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+    }).then(() => {
+        console.log('✅ Response submitted to Google Form');
+    }).catch(err => {
+        console.error('❌ Error submitting form:', err);
+    });
+}
     </script>
 </body>
 </html>
