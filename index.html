@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 10px;
         }
 
         .hearts-background {
@@ -46,11 +47,15 @@
         .container {
             position: relative;
             z-index: 1;
+            width: 100%;
+            max-width: 420px;
         }
 
         .envelope {
-            width: 350px;
+            width: 100%;
+            max-width: 350px;
             height: 250px;
+            margin: 0 auto;
             position: relative;
             cursor: pointer;
             transition: transform 0.3s ease;
@@ -83,8 +88,8 @@
         }
 
         .flap {
-            width: 350px;
-            height: 175px;
+            width: 100%;
+            height: 70%;
             background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
             position: absolute;
             top: 0;
@@ -123,12 +128,13 @@
         }
 
         .letter {
-            width: 300px;
-            height: 200px;
+            width: 85%;
+            height: 80%;
             background: linear-gradient(145deg, #ffffff 0%, #fff5f7 50%, #ffe4e9 100%);
             position: absolute;
-            top: 125px;
-            left: 25px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             border-radius: 12px;
             display: flex;
             flex-direction: column;
@@ -157,7 +163,7 @@
         }
 
         .envelope.open .letter {
-            transform: translateY(-150px);
+            transform: translate(-50%, -200%);
             z-index: 4;
             opacity: 1;
         }
@@ -172,6 +178,7 @@
             font-weight: 500;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             animation: pulse 2s infinite;
+            white-space: nowrap;
         }
 
         @keyframes pulse {
@@ -183,13 +190,13 @@
             display: none;
             text-align: center;
             background: white;
-            padding: 50px 40px;
+            padding: 30px 20px;
             border-radius: 24px;
             box-shadow:
                 0 20px 60px rgba(0, 0, 0, 0.15),
                 0 8px 20px rgba(0, 0, 0, 0.1);
-            max-width: 420px;
-            max-height: 80vh;
+            width: 100%;
+            max-height: 90vh;
             overflow-y: auto;
         }
 
@@ -210,7 +217,7 @@
         }
 
         .question-container h2 {
-            font-size: 34px;
+            font-size: clamp(24px, 6vw, 34px);
             background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -223,7 +230,7 @@
         .warning-text {
             display: none;
             color: #ff1744;
-            font-size: 20px;
+            font-size: clamp(16px, 4vw, 20px);
             font-weight: 700;
             margin-bottom: 20px;
             animation: shake 0.5s;
@@ -242,14 +249,15 @@
 
         .buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 16px 45px;
-            font-size: 18px;
+            padding: 14px 35px;
+            font-size: clamp(16px, 3.5vw, 18px);
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -314,7 +322,7 @@
         }
 
         .success-message h2 {
-            font-size: 32px;
+            font-size: clamp(24px, 6vw, 32px);
             background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -331,8 +339,8 @@
         }
 
         .date-btn {
-            padding: 18px 30px;
-            font-size: 18px;
+            padding: 16px 30px;
+            font-size: clamp(16px, 3.5vw, 18px);
             border: 2px solid #ff6b9d;
             border-radius: 50px;
             cursor: pointer;
@@ -352,7 +360,7 @@
         .movie-options {
             display: none;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -363,7 +371,7 @@
         .food-options {
             display: none;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -371,11 +379,11 @@
             display: flex;
         }
 
-        .movie-btn {
+        .movie-btn, .food-btn {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border: 2px solid #ff6b9d;
             border-radius: 15px;
             cursor: pointer;
@@ -383,10 +391,10 @@
             background: white;
             color: #ff6b9d;
             font-weight: 600;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
         }
 
-        .movie-btn:hover {
+        .movie-btn:hover, .food-btn:hover {
             background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
             color: white;
             transform: translateY(-2px);
@@ -394,39 +402,19 @@
         }
 
         .movie-btn img {
-            width: 60px;
-            height: 90px;
+            width: 50px;
+            height: 75px;
             object-fit: cover;
             border-radius: 8px;
-        }
-
-        .food-btn {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 20px;
-            border: 2px solid #ff6b9d;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-            color: #ff6b9d;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .food-btn:hover {
-            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+            flex-shrink: 0;
         }
 
         .food-btn img {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
             border-radius: 8px;
+            flex-shrink: 0;
         }
 
         .custom-input-container {
@@ -442,7 +430,7 @@
         .custom-input {
             width: 100%;
             padding: 15px 20px;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             border: 2px solid #ff6b9d;
             border-radius: 25px;
             outline: none;
@@ -458,7 +446,7 @@
         .submit-btn {
             margin-top: 15px;
             padding: 15px 40px;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -485,13 +473,13 @@
         }
 
         .final-message .heart-icon {
-            font-size: 90px;
+            font-size: clamp(60px, 15vw, 90px);
             animation: float 2s infinite ease-in-out;
             filter: drop-shadow(0 4px 8px rgba(255, 107, 157, 0.3));
         }
 
         .final-message h2 {
-            font-size: 38px;
+            font-size: clamp(28px, 7vw, 38px);
             background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -502,12 +490,12 @@
 
         .final-message p {
             color: #666;
-            font-size: 18px;
+            font-size: clamp(16px, 3.5vw, 18px);
             margin-top: 20px;
             font-weight: 500;
         }
 
-        .movie-details {
+        .movie-details, .food-details {
             display: none;
             flex-direction: column;
             align-items: center;
@@ -516,25 +504,31 @@
             animation: slideIn 0.4s ease;
         }
 
-        .movie-details.active {
+        .movie-details.active, .food-details.active {
             display: flex;
         }
 
-        .movie-poster img {
-            width: 150px;
-            height: 225px;
+        .movie-poster img, .food-preview img {
+            width: clamp(120px, 35vw, 150px);
+            height: auto;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
         }
 
-        .movie-info {
-            text-align: center;
-            max-width: 300px;
+        .food-preview img {
+            width: clamp(120px, 35vw, 150px);
+            height: clamp(120px, 35vw, 150px);
         }
 
-        .movie-info h3 {
-            font-size: 24px;
+        .movie-info, .food-info {
+            text-align: center;
+            max-width: 100%;
+            padding: 0 10px;
+        }
+
+        .movie-info h3, .food-info h3 {
+            font-size: clamp(20px, 5vw, 24px);
             background: linear-gradient(135deg, #ff6b9d 0%, #c73866 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -543,9 +537,9 @@
             font-weight: 700;
         }
 
-        .movie-info p {
+        .movie-info p, .food-info p {
             color: #666;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             line-height: 1.5;
             margin-bottom: 20px;
             max-height: 150px;
@@ -555,7 +549,7 @@
 
         .confirm-btn {
             padding: 15px 30px;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -574,7 +568,7 @@
         .back-btn {
             align-self: flex-start;
             padding: 10px 20px;
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             border: 2px solid #ff6b9d;
             border-radius: 25px;
             cursor: pointer;
@@ -590,6 +584,58 @@
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .envelope {
+                height: 200px;
+                max-width: 300px;
+            }
+
+            .question-container {
+                padding: 25px 15px;
+                max-height: 85vh;
+            }
+
+            .tap-text {
+                bottom: -40px;
+                font-size: 14px;
+            }
+
+            .movie-btn img {
+                width: 40px;
+                height: 60px;
+            }
+
+            .food-btn img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .buttons {
+                gap: 10px;
+            }
+
+            .date-options, .movie-options, .food-options {
+                gap: 12px;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .envelope {
+                height: 150px;
+            }
+
+            .question-container {
+                max-height: 95vh;
+                padding: 20px 15px;
+            }
         }
     </style>
 </head>
@@ -616,25 +662,25 @@
                 <button class="btn btn-no" id="btnNo">No</button>
             </div>
             <div class="success-message" id="successMessage">
-                <h2>Anong klaseng date gusto mo? 💝</h2>
+                <h2>Anong klaseng date gusto mo? 💗</h2>
                 <div class="date-options">
                     <button class="date-btn" data-choice="Movies">Movies 🎬</button>
                     <button class="date-btn" data-choice="Kakain">Kakain 🍽️</button>
-                    <button class="date-btn" id="customBtn">May suggest akong iba 💭</button>
+                    <button class="date-btn" id="customBtn">Suggest 💭</button>
                 </div>
                 <div class="movie-options" id="movieOptions">
                     <button class="back-btn" id="backToDateOptions">← Back to Date Options</button>
                     <button class="movie-btn" data-movie="Wuthering Heights">
                         <img src="https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001434?width=200" alt="Wuthering Heights">
-                        Wuthering Heights
+                        <span>Wuthering Heights</span>
                     </button>
                     <button class="movie-btn" data-movie="The Loved One">
                         <img src="https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001425?width=200" alt="The Loved One">
-                        The Loved One
+                        <span>The Loved One</span>
                     </button>
                     <button class="movie-btn" data-movie="Diabolic">
                         <img src="https://smcine-digital-cdn.app.vista.co/media/entity/get/FilmPosterGraphic/HO00001426?width=200" alt="Diabolic">
-                        Diabolic
+                        <span>Diabolic</span>
                     </button>
                 </div>
                 <div class="movie-details" id="movieDetails">
@@ -652,33 +698,44 @@
                     <button class="back-btn" id="backToDateOptionsFromFood">← Back to Date Options</button>
                     <button class="food-btn" data-food="Jollibee">
                         <img src="https://tse3.mm.bing.net/th/id/OIP.d0nunpqtC4sT-hzPCI1OiwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Jollibee">
-                        Jollibee
+                        <span>Jollibee</span>
                     </button>
                     <button class="food-btn" data-food="Mcdo">
                         <img src="https://tse1.mm.bing.net/th/id/OIP.GEu-BoCoUyyS4RcTlOsb5wHaE6?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Mcdo">
-                        Mcdo
+                        <span>Mcdo</span>
                     </button>
                     <button class="food-btn" data-food="Mang Inasal">
                         <img src="https://th.bing.com/th/id/R.7ee6a2d6a1b55af15a9ae1cdc9833019?rik=I%2bKHAZWTFK3Ipw&riu=http%3a%2f%2fphilnews.ph%2fwp-content%2fuploads%2f2023%2f11%2fMang-Inasal.jpg&ehk=Fchl14oOEZOA6WOyod6X7LSryObsE9eMS4buuzny1HI%3d&risl=&pid=ImgRaw&r=0" alt="Mang Inasal">
-                        Mang Inasal
+                        <span>Mang Inasal</span>
                     </button>
                     <button class="food-btn" data-food="DadBod">
                         <img src="https://media-cdn.tripadvisor.com/media/photo-p/13/6f/6e/15/photo0jpg.jpg" alt="DadBod">
-                        DadBod
+                        <span>DadBod</span>
                     </button>
                     <button class="food-btn" data-food="Buddys">
                         <img src="https://media-cdn.tripadvisor.com/media/photo-s/07/9c/48/ac/rule-of-thumb-order-at.jpg" alt="Buddys">
-                        Buddys
+                        <span>Buddys</span>
                     </button>
                     <button class="food-btn" data-food="Le Maison">
                         <img src="https://lh3.googleusercontent.com/p/AF1QipOVL4qbakNjUwACVWhZsVI2ODe1mYf1ixiUsEb_=w426-h240-k-no" alt="Le Maison">
-                        Le Maison
+                        <span>Le Maison</span>
                     </button>
                     <button class="food-btn" data-food="Seasoned Unlimited Samgyupsal">
                         <img src="https://tse4.mm.bing.net/th/id/OIP.nq76HyQejXzC_15flgty0AHaL6?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Seasoned Unlimited Samgyupsal">
-                        Seasoned Unlimited Samgyupsal
+                        <span>Seasoned Unlimited Samgyupsal</span>
                     </button>
                     <button class="date-btn" id="foodSuggestionsBtn">Suggest 💭</button>
+                </div>
+                <div class="food-details" id="foodDetails">
+                    <button class="back-btn" id="backToFoodOptions">← Back to Food Options</button>
+                    <div class="food-preview">
+                        <img id="selectedFoodImage" src="" alt="Food">
+                    </div>
+                    <div class="food-info">
+                        <h3 id="selectedFoodName"></h3>
+                        <p>Sigurado ka na dito? 💕</p>
+                        <button class="confirm-btn" id="confirmFood">Confirm</button>
+                    </div>
                 </div>
                 <div class="custom-input-container" id="foodCustomInputContainer">
                     <input type="text" class="custom-input" id="foodCustomInput" placeholder="Ano gusto mong kainin? 💕">
@@ -736,7 +793,6 @@
                 warningText.classList.remove('show');
             }, 2000);
             
-            // After showing warning, hide the No button
             setTimeout(() => {
                 this.classList.add('hidden');
                 setTimeout(() => {
@@ -794,7 +850,10 @@
         const selectedMovieDescription = document.getElementById('selectedMovieDescription');
         const confirmMovie = document.getElementById('confirmMovie');
         const foodOptions = document.getElementById('foodOptions');
-        const foodButtons = document.querySelectorAll('.date-btn[data-food]');
+        const foodDetails = document.getElementById('foodDetails');
+        const selectedFoodImage = document.getElementById('selectedFoodImage');
+        const selectedFoodName = document.getElementById('selectedFoodName');
+        const confirmFood = document.getElementById('confirmFood');
         const foodSuggestionsBtn = document.getElementById('foodSuggestionsBtn');
         const foodCustomInputContainer = document.getElementById('foodCustomInputContainer');
         const foodCustomInput = document.getElementById('foodCustomInput');
@@ -822,32 +881,77 @@
             }
         };
 
+        // Food data
+        const foodData = {
+            "Jollibee": "https://tse3.mm.bing.net/th/id/OIP.d0nunpqtC4sT-hzPCI1OiwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
+            "Mcdo": "https://tse1.mm.bing.net/th/id/OIP.GEu-BoCoUyyS4RcTlOsb5wHaE6?rs=1&pid=ImgDetMain&o=7&rm=3",
+            "Mang Inasal": "https://th.bing.com/th/id/R.7ee6a2d6a1b55af15a9ae1cdc9833019?rik=I%2bKHAZWTFK3Ipw&riu=http%3a%2f%2fphilnews.ph%2fwp-content%2fuploads%2f2023%2f11%2fMang-Inasal.jpg&ehk=Fchl14oOEZOA6WOyod6X7LSryObsE9eMS4buuzny1HI%3d&risl=&pid=ImgRaw&r=0",
+            "DadBod": "https://media-cdn.tripadvisor.com/media/photo-p/13/6f/6e/15/photo0jpg.jpg",
+            "Buddys": "https://media-cdn.tripadvisor.com/media/photo-s/07/9c/48/ac/rule-of-thumb-order-at.jpg",
+            "Le Maison": "https://lh3.googleusercontent.com/p/AF1QipOVL4qbakNjUwACVWhZsVI2ODe1mYf1ixiUsEb_=w426-h240-k-no",
+            "Seasoned Unlimited Samgyupsal": "https://tse4.mm.bing.net/th/id/OIP.nq76HyQejXzC_15flgty0AHaL6?rs=1&pid=ImgDetMain&o=7&rm=3"
+        };
+
         // Movie button event handlers
         movieButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 const movie = this.getAttribute('data-movie');
                 const movieInfo = movieData[movie];
 
-                // Hide movie options and show movie details
                 movieOptions.classList.remove('active');
                 movieDetails.classList.add('active');
 
-                // Populate movie details
                 selectedMoviePoster.src = movieInfo.poster;
                 selectedMovieTitle.textContent = movie;
                 selectedMovieDescription.textContent = movieInfo.description;
             });
         });
 
-        // Back to date options button handler
+        // Food button event handlers
+        const foodBtns = document.querySelectorAll('.food-btn[data-food]');
+        foodBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const foodChoice = this.getAttribute('data-food');
+                const foodImage = foodData[foodChoice];
+
+                foodOptions.classList.remove('active');
+                foodDetails.classList.add('active');
+
+                selectedFoodImage.src = foodImage;
+                selectedFoodName.textContent = foodChoice;
+            });
+        });
+
+        // Confirm food button handler
+        confirmFood.addEventListener('click', function() {
+            const foodChoice = selectedFoodName.textContent;
+            showFinalMessage(`${foodChoice} - see you sa date natin`);
+        });
+
+        // Back to food options button handler
+        const backToFoodOptions = document.getElementById('backToFoodOptions');
+        backToFoodOptions.addEventListener('click', function() {
+            foodDetails.classList.remove('active');
+            foodOptions.classList.add('active');
+        });
+
+        // Back to date options button handlers
         const backToDateOptions = document.getElementById('backToDateOptions');
         backToDateOptions.addEventListener('click', function() {
             movieOptions.classList.remove('active');
             customInputContainer.classList.remove('active');
             movieDetails.classList.remove('active');
             document.querySelector('.date-options').style.display = 'flex';
-            // Restore original heading
-            document.querySelector('.success-message h2').textContent = 'Anong klaseng date gusto mo? 💝';
+            document.querySelector('.success-message h2').textContent = 'Anong klaseng date gusto mo? 💗';
+        });
+
+        const backToDateOptionsFromFood = document.getElementById('backToDateOptionsFromFood');
+        backToDateOptionsFromFood.addEventListener('click', function() {
+            foodOptions.classList.remove('active');
+            foodCustomInputContainer.classList.remove('active');
+            foodDetails.classList.remove('active');
+            document.querySelector('.date-options').style.display = 'flex';
+            document.querySelector('.success-message h2').textContent = 'Anong klaseng date gusto mo? 💗';
         });
 
         // Back to movies button handler
@@ -861,15 +965,6 @@
         confirmMovie.addEventListener('click', function() {
             const selectedMovie = selectedMovieTitle.textContent;
             showFinalMessage(`${selectedMovie} - see you sa movie date natin`);
-        });
-
-        // Food button event handlers
-        const foodBtns = document.querySelectorAll('.food-btn[data-food]');
-        foodBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const foodChoice = this.getAttribute('data-food');
-                showFinalMessage(`${foodChoice} - see you sa date natin`);
-            });
         });
 
         // Food suggestions button handler
@@ -895,16 +990,6 @@
             }
         });
 
-        // Back to date options from food button handler
-        const backToDateOptionsFromFood = document.getElementById('backToDateOptionsFromFood');
-        backToDateOptionsFromFood.addEventListener('click', function() {
-            foodOptions.classList.remove('active');
-            foodCustomInputContainer.classList.remove('active');
-            document.querySelector('.date-options').style.display = 'flex';
-            // Restore original heading
-            document.querySelector('.success-message h2').textContent = 'Anong klaseng date gusto mo? 💝';
-        });
-
         dateButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 const choice = this.getAttribute('data-choice');
@@ -912,22 +997,17 @@
                     document.querySelector('.date-options').style.display = 'none';
                     customInputContainer.classList.remove('active');
                     foodCustomInputContainer.classList.remove('active');
-                    // Change heading text for Movies
                     document.querySelector('.success-message h2').textContent = 'Anong gusto mong panoorin? 💝';
                     movieOptions.classList.add('active');
                 } else if (choice === 'Kakain') {
                     document.querySelector('.date-options').style.display = 'none';
                     customInputContainer.classList.remove('active');
                     foodCustomInputContainer.classList.remove('active');
-                    // Change heading text for Food
                     document.querySelector('.success-message h2').textContent = 'San mo gustong kumain? 💝';
                     foodOptions.classList.add('active');
-                } else {
-                    showFinalMessage(choice);
                 }
             });
         });
-
 
         customBtn.addEventListener('click', function() {
             customInputContainer.classList.add('active');
@@ -951,35 +1031,30 @@
 
         function showFinalMessage(choice) {
             successMessage.classList.remove('active');
-            finalText.textContent = `${choice}!💝`;
+            finalText.textContent = `${choice}! 💝`;
             finalMessage.classList.add('active');
             
-            // Send notification via Google Form
             sendGoogleFormNotification(choice);
         }
         
         function sendGoogleFormNotification(choice) {
-    // Use the EDIT URL form ID (the one from /edit#responses page)
-    const FORM_ID = '18XMezKysZJM7KZfqUPj8XWfvu6rePeRLq4n8Prz9q_s';
-    const ENTRY_ID = 'entry.50451598';
-    
-    // IMPORTANT: No /e/ in the path for this format
-    const formUrl = `https://docs.google.com/forms/d/${FORM_ID}/formResponse`;
-    
-    const formData = new FormData();
-    formData.append(ENTRY_ID, choice);
-    
-    // Send the form data
-    fetch(formUrl, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-    }).then(() => {
-        console.log('✅ Response submitted to Google Form');
-    }).catch(err => {
-        console.error('❌ Error submitting form:', err);
-    });
-}
+            const FORM_ID = '18XMezKysZJM7KZfqUPj8XWfvu6rePeRLq4n8Prz9q_s';
+            const ENTRY_ID = 'entry.50451598';
+            const formUrl = `https://docs.google.com/forms/d/${FORM_ID}/formResponse`;
+            
+            const formData = new FormData();
+            formData.append(ENTRY_ID, choice);
+            
+            fetch(formUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).then(() => {
+                console.log('✅ Response submitted to Google Form');
+            }).catch(err => {
+                console.error('❌ Error submitting form:', err);
+            });
+        }
     </script>
 </body>
 </html>
