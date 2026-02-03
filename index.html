@@ -864,10 +864,11 @@
         });
 
         // Food button event handlers
-        foodButtons.forEach(btn => {
+        const foodBtns = document.querySelectorAll('.food-btn[data-food]');
+        foodBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const foodChoice = this.getAttribute('data-food');
-                showFinalMessage(foodChoice);
+                showFinalMessage(`${foodChoice} - see you sa date natin`);
             });
         });
 
@@ -880,7 +881,7 @@
         submitFoodCustom.addEventListener('click', function() {
             const foodCustomChoice = foodCustomInput.value.trim();
             if (foodCustomChoice) {
-                showFinalMessage(foodCustomChoice);
+                showFinalMessage(`${foodCustomChoice} - see you sa date natin`);
             }
         });
 
@@ -889,7 +890,7 @@
             if (e.key === 'Enter') {
                 const foodCustomChoice = foodCustomInput.value.trim();
                 if (foodCustomChoice) {
-                    showFinalMessage(foodCustomChoice);
+                    showFinalMessage(`${foodCustomChoice} - see you sa date natin`);
                 }
             }
         });
